@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Party Planning</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+        <style type="text/css">
+            @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800);
+
+            html {
+                font-family:font-family: 'Open Sans', sans-serif;
+                color:#111;
+                text-align:center;
+            }
+
+            #generate {
+                display:block;
+                padding: 0.5em;
+                margin:0.5em auto;
+            }
+
+            #value {
+                display:block;
+                margin:1em 4em;
+                padding:2em 0;
+    
+                border:1px solid #111;
+                -webkit-border-radius: 1em;
+                -moz-border-radius: 1em;
+                border-radius: 1em;
+                
+                font-size:4em;
+                font-weight:800;
+                text-align:center;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="generate">Hit me!</button>
+        <p id="value">[]</p>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+        <script type="text/javascript">
+            (function($){
+                'use strict';
+
+                var values = [0, '½', 1, 2, 3, 5, 8, 13, 20, 40, 100, '?', '∞'];
+                var $bucket = $('#value');
+
+                $('#generate').on('click', function(e){
+                    e.preventDefault();
+                    $bucket.text(values[ Math.floor(Math.random() * values.length) ]);
+                });
+
+            })(jQuery);
+        </script>
+    </body>
+</html>
