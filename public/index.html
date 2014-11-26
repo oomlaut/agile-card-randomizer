@@ -13,34 +13,56 @@
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
         <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
         <style type="text/css">
-            @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800);
+            @import url('http://fonts.googleapis.com/css?family=Open+Sans:400,800');
 
-            html {
-                font-family:font-family: 'Open Sans', sans-serif;
+            body {
+                padding:20px 0;
+
+                font-family: 'Open Sans', sans-serif;
                 color:#111;
                 text-align:center;
             }
 
             #generate {
+                vertical-align: middle;
                 display:block;
+                width:50%;
                 padding: 0.5em;
-                margin:0.5em auto;
+                margin:0 auto;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+                background-color:#da4f49;
+                color:#fafafa;
+                text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+            }
+            #generate[disabled] {
+                background-color:#ccc;
             }
 
             #value {
                 display:block;
-                margin:1em 40px;
-                padding:40px 0;
-    
-                border:1px solid #111;
+                margin:0.5em 40px 0;
+                padding:60px 0;
+
+                -webkit-box-shadow: 0px 0px 12px 0px rgba(50, 50, 50, 0.75);
+                -moz-box-shadow:    0px 0px 12px 0px rgba(50, 50, 50, 0.75);
+                box-shadow:         0px 0px 12px 0px rgba(50, 50, 50, 0.75);
+
                 -webkit-border-radius: 40px;
                 -moz-border-radius: 40px;
                 border-radius: 40px;
-                
-                font-size:100px;
+
+                font-size:120px;
                 font-weight:800;
                 text-align:center;
-                line-height:1em;
+                line-height:1;
+                text-transform:uppercase;
+            }
+
+            #generate[disabled] + #value {
+                color:#eee;
             }
         </style>
     </head>
@@ -57,9 +79,40 @@
                 var values = [0, '½', 1, 2, 3, 5, 8, 13, 20, 40, 100, '?', '∞'];
                 var $bucket = $('#value');
 
+                var timer = {
+                    timeout: null,
+                    step: null,
+                    startInt: 25,
+                    endInt: 300
+                }
+
+                var randomInt = function(max, min){
+                    min = (arguments.length === 1) ? 0 : min ;
+                    return (Math.floor(Math.random() * (max - min)) + min);
+                };
+
                 $('#generate').on('click', function(e){
                     e.preventDefault();
-                    $bucket.text(values[ Math.floor(Math.random() * values.length) ]);
+
+                    var $this = $(this).attr('disabled', 'disabled');
+
+                    var iterations = randomInt(5, 20);
+                    timer.step = (timer.endInt - timer.startInt)/iterations;
+
+                    var randomizeValue = function($el, step){
+                        step = (arguments.length === 1) ? 0 : step ;
+                        $el.text(values[ randomInt(values.length) ]);
+
+                        if(step === iterations) {
+                            $this.removeAttr('disabled');
+                        } else {
+                            timer.timeout = window.setTimeout(function(){
+                                randomizeValue($el, ++step);
+                            }, (timer.startInt + (timer.step * step)) );
+                        }
+                    };
+
+                    randomizeValue($bucket);
                 });
 
             })(jQuery);
