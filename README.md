@@ -5,7 +5,10 @@ A single-page app that displays a random card from a deck of available options.
 
 This is typically used with [project planning poker](http://www.mountaingoatsoftware.com/agile/planning-poker).
 
+[![endorse](https://api.coderwall.com/oomlaut/endorsecount.png)](https://coderwall.com/oomlaut)
+
 - - - -
+
 # node-js-getting-started
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
